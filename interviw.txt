@@ -1,0 +1,24 @@
+1. npm scripts and cli command
+npx playwright test name of the file --project chorimium, this can be difficult to run every time so we can
+go package.json and write custom command in "script" section
+2. data generator--use falker
+3. retry: playwright.config where we can modify global retry to one
+or test.describe.cinfigure({retries:2})
+4. parallel : we can config paralll from playwright config file to make it false
+or from test level as test.describe.configure({mode:'parallel'})
+or if you have test dependency use test.describe.configure({mode:serial})
+5. screenshot: if you want to screenshot use await page.screenshot({path}) in test after the particular step or if 
+you want to take screenshot particular section use page.locator.screenshot({path}) and for video use use section of config file
+6. environment variable: we can keep base url in config file. or create .env file and keep it there
+7. tags: inside of hte test we can use several tags for smoke and regression test simply using @smoke or @regression
+and run this test in terminal using npx playwright test --projecct=chromium --grep @smoke
+. mobile : to test mobile test we have to config file and create a new section like this
+{
+    name: 'mobile'
+    testMatch: 'name of test file(testMobile.spec.ts)'
+    use: {
+        ...devices['vscode will provide name of devices']
+    }
+}
+8. playlwright has several builin reporter like json reporter and junit reporter which very convineence for configure
+with different system like git which support both and alternatively we can use third party reporter like allure-reporter
