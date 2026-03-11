@@ -1,0 +1,23 @@
+{
+  "name": "qa-playwright-tests",
+  "version": "1.0.0",
+  "description": "QA Playwright tests",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabbir-06/qa-playwright-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabbir-06/qa-playwright-tests/issues"
+  },
+  "homepage": "https://github.com/sabbir-06/qa-playwright-tests#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1"
+  }
+}
