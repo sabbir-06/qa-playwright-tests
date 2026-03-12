@@ -7,6 +7,9 @@ test("drag and drop with iframe", async({page})=>{
     const item = frame
         .locator('li')
         .filter({ has: frame.locator('h5', { hasText: /^High Tatras 2$/ }) })
+    const secondItem = frame
+        .locator('li')
+        .filter({ has: frame.locator('h5', { hasText: /^High Tatras 4$/ }) })
     const gallery = frame.locator('#gallery li')
     const trashItems = frame.locator('#trash li')
 
@@ -18,9 +21,7 @@ test("drag and drop with iframe", async({page})=>{
     await expect(gallery).toHaveCount(3)
     await expect(trashItems).toHaveCount(1)
 
-    //most preciout mouse control
-    await frame.locator('li', {hasText: ("High Tatras 4")}).hover()
-    await page.mouse.down()
-    await frame.locator("#trash").hover()
+    await secondItem.dragTo(frame.locator('#trash'))
+
     await expect(frame.locator('#trash li h5' )).toHaveText(["High Tatras 2", "High Tatras 4"])
 })
