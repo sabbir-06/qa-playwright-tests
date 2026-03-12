@@ -147,7 +147,7 @@ test("table-1" , async({page}) =>{
 
 })
 
-test.only("date-picker", async({page})=>{
+test("date-picker", async({page})=>{
   await page.getByText('Forms').click()
   await page.getByText("Datepicker").click()
 
