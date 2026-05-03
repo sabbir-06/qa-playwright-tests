@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 60
 
     container:
-      image: mcr.microsoft.com/playwright:v1.52.0-jammy
+      image: mcr.microsoft.com/playwright:v1.53.1-jammy
 
     steps:
       - uses: actions/checkout@v5
@@ -23,11 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-
-      - name: Start app
-        run: |
-          nohup npm start -- --host 0.0.0.0 --port 4200 > app.log 2>&1 &
-          npx wait-on http://127.0.0.1:4200
 
       - name: Run Playwright tests
         run: npx playwright test
@@ -40,9 +35,3 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Upload app log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-log
-          path: app.log
