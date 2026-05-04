@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@angular/animations": "^14.2.12",
-    "@angular/cdk": "12.1.0",
+    "@angular/cdk": "^14.2.7",
     "@angular/common": "^14.2.12",
     "@angular/compiler": "^14.2.12",
     "@angular/core": "^14.2.12",
@@ -62,7 +62,7 @@
     "@playwright/test": "^1.35.0",
     "@types/leaflet": "1.2.3",
     "@types/node": "^12.12.70",
-    "codelyzer": "^0.0.28",
+    "codelyzer": "^6.0.2",
     "conventional-changelog-cli": "^2.2.2",
     "npm-run-all": "4.0.2",
     "rimraf": "2.6.1",
