@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -82,7 +84,7 @@ export default defineConfig({
   webServer: {
     command: 'npm start -- --host 0.0.0.0 --port 4200',
     url: 'http://127.0.0.1:4200',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120 * 1000,
   },
 });
