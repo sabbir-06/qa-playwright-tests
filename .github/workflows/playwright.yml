@@ -26,15 +26,27 @@ jobs:
 
       - name: Start app and wait for port 4200
         run: |
-          npm start -- --host 0.0.0.0 --port 4200 > app.log 2>&1 &
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          npx ng serve --host 127.0.0.1 --port 4200 --disable-host-check --verbose > app.log 2>&1 &
+          APP_PID=$!
+
           # First Angular build can take several minutes in CI containers.
           for i in {1..180}; do
             if curl -fsS http://127.0.0.1:4200 > /dev/null; then
               echo "App is ready on port 4200"
               exit 0
             fi
+
+            # If ng serve crashed, fail fast and print logs.
+            if ! kill -0 "$APP_PID" 2>/dev/null; then
+              echo "App process exited before startup"
+              cat app.log
+              exit 1
+            fi
+
             sleep 2
           done
+
           echo "App did not start in time (6 minutes)"
           cat app.log
           exit 1
