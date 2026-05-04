@@ -45,7 +45,7 @@ test('checkbox', async ({page}) =>{
   await page.getByText('Toastr').click();
   await page.getByRole('checkbox', {name: "Hide on click"}).check({force: true});
   const assertionCheckbox = page.getByRole('checkbox', {name: "Hide on click"})
-  expect(assertionCheckbox).toBeChecked();
+  await expect(assertionCheckbox).toBeChecked();
 })
 
 

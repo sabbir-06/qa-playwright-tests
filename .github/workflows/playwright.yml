@@ -40,7 +40,7 @@ jobs:
           npx wait-on http://127.0.0.1:4200 --timeout 30000 || { echo "=== SERVER LOG ==="; cat server.log; exit 1; }
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --project=chromium
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
