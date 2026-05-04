@@ -33,21 +33,10 @@ jobs:
 
       - name: Serve built app on port 4200
         run: |
-          npx http-server dist -p 4200 &
-          SERVER_PID=$!
-          for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:4200 > /dev/null; then
-              echo "App is ready on port 4200"
-              exit 0
-            fi
-            if ! kill -0 "$SERVER_PID" 2>/dev/null; then
-              echo "http-server process exited unexpectedly"
-              exit 1
-            fi
-            sleep 1
-          done
-          echo "Static server did not start in time"
-          exit 1
+          nohup npx http-server dist -p 4200 > server.log 2>&1 &
+          disown
+          echo "Waiting for http-server to be ready..."
+          npx wait-on http://127.0.0.1:4200 --timeout 30000 || { echo "=== SERVER LOG ==="; cat server.log; exit 1; }
 
       - name: Run Playwright tests
         run: npx playwright test
