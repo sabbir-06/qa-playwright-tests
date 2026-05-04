@@ -82,9 +82,9 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm start -- --host 0.0.0.0 --port 4200',
+    command: 'npx http-server dist -p 4200 --silent',
     url: 'http://127.0.0.1:4200',
     reuseExistingServer: true,
-    timeout: 120 * 1000,
+    timeout: 30 * 1000,
   },
 });

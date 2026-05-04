@@ -24,31 +24,22 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Start app and wait for port 4200
+      - name: Build Angular app
         run: |
           export NODE_OPTIONS="--max_old_space_size=4096"
-          npx ng serve --host 127.0.0.1 --port 4200 --disable-host-check --verbose > app.log 2>&1 &
-          APP_PID=$!
+          npx ng build --configuration production --output-path dist 2>&1 | tee app.log
 
-          # First Angular build can take several minutes in CI containers.
-          for i in {1..180}; do
+      - name: Serve built app on port 4200
+        run: |
+          npx http-server dist -p 4200 --silent &
+          for i in {1..30}; do
             if curl -fsS http://127.0.0.1:4200 > /dev/null; then
               echo "App is ready on port 4200"
               exit 0
             fi
-
-            # If ng serve crashed, fail fast and print logs.
-            if ! kill -0 "$APP_PID" 2>/dev/null; then
-              echo "App process exited before startup"
-              cat app.log
-              exit 1
-            fi
-
-            sleep 2
+            sleep 1
           done
-
-          echo "App did not start in time (6 minutes)"
-          cat app.log
+          echo "Static server did not start"
           exit 1
 
       - name: Run Playwright tests
